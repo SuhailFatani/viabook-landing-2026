@@ -1004,3 +1004,23 @@
     height: auto;
   }
 }
+
+/* Center the complete sticky showcase in the viewport below the glass navigation. */
+@media (min-width: 701px) {
+  .scroll-showcase-sticky {
+    --showcase-centered-copy-top: max(40px, calc(50svh - 373px));
+    --showcase-centered-card-top: calc(var(--showcase-centered-copy-top) + 140px);
+  }
+
+  .scroll-showcase-copy {
+    top: var(--showcase-centered-copy-top);
+  }
+
+  .scroll-showcase-card {
+    top: var(--showcase-centered-card-top);
+  }
+
+  .scroll-showcase-features {
+    top: calc(var(--showcase-centered-card-top) + 574px);
+  }
+}
