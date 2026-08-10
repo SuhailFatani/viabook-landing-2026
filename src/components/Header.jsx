@@ -43,6 +43,7 @@ const labelsByLocale = {
 const NAV_HIDE_THRESHOLD = 18;
 const NAV_SHOW_THRESHOLD = 8;
 const NAV_ALWAYS_VISIBLE_RANGE = 80;
+const COMPACT_NAV_MAX = 1200;
 
 export function Header({ locale, onToggleLanguage }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,7 +82,7 @@ export function Header({ locale, onToggleLanguage }) {
     };
 
     const closeAboveBreakpoint = () => {
-      if (window.innerWidth > 1100) {
+      if (window.innerWidth > COMPACT_NAV_MAX) {
         setIsClosing(false);
         setIsOpen(false);
       }
@@ -108,7 +109,7 @@ export function Header({ locale, onToggleLanguage }) {
       const scrollDelta = scrollY - lastScrollYRef.current;
       const scrollDirection = scrollDelta > 0 ? "down" : scrollDelta < 0 ? "up" : null;
       const scrolled = scrollY > 24;
-      const canAutoHide = window.innerWidth > 1100;
+      const canAutoHide = window.innerWidth > COMPACT_NAV_MAX;
       const header = headerRef.current;
       const sampleY = scrolled
         ? Math.min(window.innerHeight - 1, 32)
