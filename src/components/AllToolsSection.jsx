@@ -28,16 +28,18 @@ const contentByLocale = {
 };
 
 const cardAssets = {
-  payments: "/assets/all-tools/card-payments.png",
-  analytics: "/assets/all-tools/card-analytics.png",
-  customers: "/assets/all-tools/card-customers.png",
-  ai: "/assets/all-tools/card-ai.png",
+  payments: "/assets/all-tools/payments.png",
+  analytics: "/assets/all-tools/analytics.png",
+  customers: "/assets/all-tools/customers.png",
+  ai: "/assets/all-tools/ai-create-3x.png",
 };
 
 function ToolCard({ cardKey, content, index }) {
   return (
     <article className={"all-tools-card all-tools-card-" + cardKey} data-reveal style={{ "--tool-index": index }}>
-      <img className="all-tools-card-render" src={cardAssets[cardKey]} alt="" aria-hidden="true" decoding="async" />
+      <div className="all-tools-card-visual" aria-hidden="true">
+        <img className="all-tools-card-render" src={cardAssets[cardKey]} alt="" decoding="async" />
+      </div>
       <div className="all-tools-card-copy">
         <h3>{content.title}</h3>
         <p>{content.description}</p>
@@ -59,14 +61,10 @@ export function AllToolsSection({ locale = "ar" }) {
         </header>
 
         <div className="all-tools-grid">
-          <div className="all-tools-row all-tools-row-top">
-            <ToolCard cardKey="payments" content={content.cards.payments} index={0} />
-            <ToolCard cardKey="analytics" content={content.cards.analytics} index={1} />
-          </div>
-          <div className="all-tools-row all-tools-row-bottom">
-            <ToolCard cardKey="customers" content={content.cards.customers} index={2} />
-            <ToolCard cardKey="ai" content={content.cards.ai} index={3} />
-          </div>
+          <ToolCard cardKey="payments" content={content.cards.payments} index={0} />
+          <ToolCard cardKey="analytics" content={content.cards.analytics} index={1} />
+          <ToolCard cardKey="customers" content={content.cards.customers} index={2} />
+          <ToolCard cardKey="ai" content={content.cards.ai} index={3} />
         </div>
       </div>
     </section>

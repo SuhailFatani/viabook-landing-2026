@@ -605,3 +605,91 @@
   }
 }
 
+/* All-tools bento: CSS cards with original Figma 3x media inside. */
+.all-tools-grid {
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  direction: ltr;
+}
+
+.all-tools-card {
+  height: clamp(420px, 45vw, 494px);
+  min-height: 0;
+  aspect-ratio: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fdfdfd;
+}
+
+.all-tools-card-visual {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  background-color: #fdfdfd;
+  background-image: radial-gradient(circle, #f0f0f2 2px, transparent 2.2px);
+  background-size: 25px 25px;
+}
+
+.all-tools-card-render {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 50%;
+  bottom: auto;
+  left: auto;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center top;
+  transform: translateX(50%);
+}
+
+.all-tools-card-ai .all-tools-card-render {
+  top: 7%;
+  width: 82%;
+  height: 86%;
+  object-position: center;
+}
+
+.all-tools-card-copy,
+.all-tools-card-customers .all-tools-card-copy {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  flex: 0 0 132px;
+  min-height: 132px;
+  justify-content: flex-end;
+  padding: 20px 24px 24px;
+  background: linear-gradient(to bottom, rgba(253, 253, 253, 0.72), #fdfdfd 28%, #fdfdfd);
+}
+
+@media (max-width: 719px) {
+  .all-tools-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .all-tools-card {
+    height: 420px;
+  }
+
+  .all-tools-card-copy,
+  .all-tools-card-customers .all-tools-card-copy {
+    flex-basis: 142px;
+    min-height: 142px;
+    padding: 20px;
+  }
+}
+/* Preserve the approved single-column mobile card order. */
+@media (max-width: 719px) {
+  .all-tools-card-analytics { order: 1; }
+  .all-tools-card-payments { order: 2; }
+  .all-tools-card-ai { order: 3; }
+  .all-tools-card-customers { order: 4; }
+}
+
