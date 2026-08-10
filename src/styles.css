@@ -1024,7 +1024,6 @@
     top: calc(var(--showcase-centered-card-top) + 574px);
   }
 }
-
 @media (min-width: 901px) {
   html[lang="ar"] .scroll-showcase-sticky {
     --showcase-centered-copy-top: max(40px, calc(50svh - 364px));
