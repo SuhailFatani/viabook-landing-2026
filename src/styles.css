@@ -733,3 +733,79 @@
     will-change: auto;
   }
 }
+
+
+/* Match the Figma bento media crops and restore the image-to-copy fade. */
+.all-tools-card-visual::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 168px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(253, 253, 253, 0) 0%, rgba(253, 253, 253, .88) 56%, #fdfdfd 100%);
+}
+
+.all-tools-card-render {
+  right: auto;
+  bottom: auto;
+  left: auto;
+  width: auto;
+  height: auto;
+  max-width: none;
+  object-fit: initial;
+  object-position: initial;
+  transform: none;
+}
+
+.all-tools-card-payments .all-tools-card-render {
+  top: 44px;
+  right: 7.8%;
+  width: 226%;
+}
+
+.all-tools-card-analytics .all-tools-card-render {
+  top: 44px;
+  right: 5.75%;
+  width: 110.4%;
+}
+
+.all-tools-card-customers .all-tools-card-render {
+  top: 48px;
+  right: 6.55%;
+  width: 108.3%;
+}
+
+.all-tools-card-ai .all-tools-card-render {
+  top: 61px;
+  right: 10.5%;
+  width: 79%;
+  height: auto;
+}
+
+.all-tools-card-copy,
+.all-tools-card-customers .all-tools-card-copy {
+  z-index: 3;
+  background: #fdfdfd;
+}
+
+@media (max-width: 719px) {
+  .all-tools-card-visual::after {
+    height: 148px;
+  }
+
+  .all-tools-card-payments .all-tools-card-render,
+  .all-tools-card-analytics .all-tools-card-render {
+    top: 36px;
+  }
+
+  .all-tools-card-customers .all-tools-card-render {
+    top: 40px;
+  }
+
+  .all-tools-card-ai .all-tools-card-render {
+    top: 48px;
+  }
+}
