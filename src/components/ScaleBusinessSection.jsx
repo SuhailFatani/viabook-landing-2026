@@ -50,13 +50,13 @@ const contentByLocale = {
 };
 
 const animatedMapLocations = [
-  { x: 16.206, y: 16.095, delay: "-0.2s" },
-  { x: 32.375, y: 22.027, delay: "-1.85s" },
-  { x: 68.586, y: 36.913, delay: "-3.5s" },
-  { x: 24.276, y: 51.592, delay: "-5.15s" },
-  { x: 53.139, y: 57.453, delay: "-6.8s" },
-  { x: 73.578, y: 69.297, delay: "-8.45s" },
-  { x: 48.037, y: 81.09, delay: "-10.1s" },
+  { x: 16.206, y: 16.095, delay: "-0.23s" },
+  { x: 32.375, y: 22.027, delay: "-2.1275s" },
+  { x: 68.586, y: 36.913, delay: "-4.025s" },
+  { x: 24.276, y: 51.592, delay: "-5.9225s" },
+  { x: 53.139, y: 57.453, delay: "-7.82s" },
+  { x: 73.578, y: 69.297, delay: "-9.7175s" },
+  { x: 48.037, y: 81.09, delay: "-11.615s" },
 ];
 
 export function ScaleBusinessSection({ locale = "ar" }) {

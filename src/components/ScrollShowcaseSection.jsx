@@ -91,7 +91,7 @@ export function ScrollShowcaseSection({ locale = "ar" }) {
 
   useEffect(() => {
     if (phase !== 3) return undefined;
-    const timer = window.setInterval(() => setActiveFeature((current) => current === "bookings" ? "quick" : "bookings"), 6900);
+    const timer = window.setInterval(() => setActiveFeature((current) => current === "bookings" ? "quick" : "bookings"), 7935);
     return () => window.clearInterval(timer);
   }, [phase]);
 
