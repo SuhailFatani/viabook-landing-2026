@@ -809,3 +809,198 @@
     top: 48px;
   }
 }
+
+/* Translation-safe layout for scale-business and final CTA copy. */
+.scale-business-section[dir="ltr"] .scale-business-content,
+.scale-business-section[dir="ltr"] .scale-business-header,
+.scale-business-section[dir="ltr"] .scale-business-features,
+.scale-business-section[dir="ltr"] .scale-business-feature {
+  height: auto;
+}
+
+.scale-business-section[dir="ltr"] .scale-business-header {
+  margin-top: 12px;
+}
+
+.scale-business-section[dir="ltr"] .scale-business-header h2,
+.scale-business-section[dir="ltr"] .scale-business-header p {
+  width: 100%;
+  max-width: 100%;
+}
+
+.scale-business-section[dir="ltr"] .scale-business-header h2 span {
+  white-space: normal;
+}
+
+.scale-business-section[dir="ltr"] .scale-business-features {
+  margin-top: 36px;
+  gap: 26px;
+}
+
+.scale-business-section[dir="ltr"] .scale-business-feature {
+  min-height: 0;
+  gap: 5px;
+}
+
+.scale-business-section[dir="ltr"] .scale-business-feature-heading {
+  height: auto;
+  min-height: 28px;
+}
+
+.scale-business-section[dir="ltr"] .scale-business-feature p {
+  padding-inline-start: 36px;
+}
+
+.final-cta-section[dir="ltr"] .final-cta-copy {
+  width: min(58%, 620px);
+  height: auto;
+  margin-left: auto;
+  justify-content: center;
+  gap: 24px;
+}
+
+.final-cta-section[dir="ltr"] .final-cta-heading {
+  gap: 10px;
+}
+
+.final-cta-section[dir="ltr"] .final-cta-heading h2,
+.final-cta-section[dir="ltr"] .final-cta-heading p {
+  height: auto;
+}
+
+@media (min-width: 1101px) and (max-width: 1439px) {
+  .scale-business-section[dir="ltr"] .scale-business-inner {
+    align-items: center;
+  }
+
+  .scale-business-section[dir="ltr"] .scale-business-header {
+    margin-top: 0;
+  }
+
+  .scale-business-section[dir="ltr"] .scale-business-header h2 {
+    font-size: clamp(38px, 3.1vw, 44px);
+    line-height: 1.08;
+  }
+
+  .scale-business-section[dir="ltr"] .scale-business-header p {
+    font-size: 18px;
+    line-height: 1.35;
+  }
+
+  .scale-business-section[dir="ltr"] .scale-business-features {
+    margin-top: 28px;
+    gap: 20px;
+  }
+
+  .scale-business-section[dir="ltr"] .scale-business-feature {
+    gap: 3px;
+  }
+
+  .final-cta-section[dir="ltr"] .final-cta-card {
+    min-height: 326px;
+    height: auto;
+    padding-block: 56px;
+  }
+
+  .final-cta-section[dir="ltr"] .final-cta-copy {
+    width: 62%;
+    min-height: 214px;
+  }
+
+  .final-cta-section[dir="ltr"] .final-cta-heading h2 {
+    font-size: 30px;
+    line-height: 1.15;
+  }
+
+  .final-cta-section[dir="ltr"] .final-cta-heading p {
+    font-size: 20px;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 1100px) {
+  .scale-business-section[dir="ltr"] .scale-business-header {
+    margin-top: 0;
+  }
+
+  .scale-business-section[dir="ltr"] .scale-business-features {
+    margin-top: 40px;
+    gap: 30px;
+  }
+
+  .final-cta-section[dir="ltr"] .final-cta-copy {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .scale-business-section[dir="ltr"] .scale-business-features {
+    margin-top: 32px;
+    gap: 28px;
+  }
+}
+
+@media (min-width: 1101px) {
+  .scale-business-section[dir="ltr"] .scale-business-inner {
+    height: 542px;
+    align-items: center;
+  }
+
+  .scale-business-section[dir="ltr"] .scale-business-header {
+    margin-top: 0;
+  }
+
+  .scale-business-section[dir="ltr"] .scale-business-header h2 {
+    font-size: 44px;
+    line-height: 1.08;
+  }
+
+  .scale-business-section[dir="ltr"] .scale-business-header p {
+    font-size: 18px;
+    line-height: 1.35;
+  }
+
+  .scale-business-section[dir="ltr"] .scale-business-features {
+    margin-top: 28px;
+    gap: 20px;
+  }
+
+  .scale-business-section[dir="ltr"] .scale-business-feature {
+    gap: 3px;
+  }
+
+  .final-cta-section[dir="ltr"] .final-cta-card {
+    min-height: 326px;
+    height: 326px;
+    padding: 54px 60px;
+  }
+
+  .final-cta-section[dir="ltr"] .final-cta-copy {
+    width: 62%;
+    height: 218px;
+    min-height: 0;
+    gap: 18px;
+  }
+
+  .final-cta-section[dir="ltr"] .final-cta-heading {
+    gap: 8px;
+  }
+
+  .final-cta-section[dir="ltr"] .final-cta-heading h2 {
+    font-size: 30px;
+    line-height: 1.15;
+  }
+
+  .final-cta-section[dir="ltr"] .final-cta-heading p {
+    font-size: 20px;
+    line-height: 1.35;
+  }
+}
+
+@media (min-width: 1101px) {
+  .scale-business-section[dir="ltr"] .scale-business-inner {
+    min-height: 542px;
+    height: auto;
+  }
+}
