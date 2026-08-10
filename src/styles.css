@@ -486,8 +486,8 @@
     transform: none !important;
   }
 
-  .site-header.is-menu-open > .header-leading,
-  .site-header.is-menu-open > .menu-button {
+  .site-header > .header-leading,
+  .site-header > .menu-button {
     z-index: 3;
   }
 
