@@ -72,28 +72,32 @@ export function FaqSection({ locale = "ar" }) {
             const triggerId = `faq-trigger-${locale}-${index}`;
 
             return (
-              <article className={`faq-item${isOpen ? " is-open" : ""}`} data-reveal key={item.question}>
-                <button
-                  id={triggerId}
-                  className="faq-question"
-                  type="button"
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  onClick={() => setOpenIndex(index)}
-                >
-                  <img className="faq-chevron" src="/assets/faq/chevron-down.svg" alt="" aria-hidden="true" />
-                  <span>{item.question}</span>
-                </button>
+              <article className={`faq-item${isOpen ? " is-open" : ""}`} key={item.question}>
+                <div className="faq-item-motion" data-reveal>
+                  <button
+                    id={triggerId}
+                    className="faq-question"
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => {
+                      if (!isOpen) setOpenIndex(index);
+                    }}
+                  >
+                    <img className="faq-chevron" src="/assets/faq/chevron-down.svg" alt="" aria-hidden="true" />
+                    <span>{item.question}</span>
+                  </button>
 
-                <div
-                  id={panelId}
-                  className="faq-answer"
-                  role="region"
-                  aria-labelledby={triggerId}
-                  aria-hidden={!isOpen}
-                >
-                  <div className="faq-answer-inner">
-                    <p>{item.answer}</p>
+                  <div
+                    id={panelId}
+                    className="faq-answer"
+                    role="region"
+                    aria-labelledby={triggerId}
+                    aria-hidden={!isOpen}
+                  >
+                    <div className="faq-answer-inner">
+                      <p>{item.answer}</p>
+                    </div>
                   </div>
                 </div>
               </article>
