@@ -91,7 +91,12 @@ export function Footer({ locale = "ar" }) {
         </div>
 
         <div className="footer-bottom">
-          <div className="footer-social" data-reveal aria-label={content.socialLabel}>
+          <div
+            className="footer-social"
+            data-reveal
+            data-reveal-page-end
+            aria-label={content.socialLabel}
+          >
             <a href="https://x.com/viabook" target="_blank" rel="noreferrer" aria-label={content.xLabel}>
               <img src="/assets/footer/x.svg" alt="" />
             </a>
@@ -100,7 +105,7 @@ export function Footer({ locale = "ar" }) {
             </a>
           </div>
 
-          <div className="footer-legal" data-reveal>
+          <div className="footer-legal" data-reveal data-reveal-page-end>
             {content.legal.map((item) =>
               item.href ? (
                 <a href={item.href} key={item.label}>

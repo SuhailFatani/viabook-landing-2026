@@ -55,6 +55,12 @@ export function Hero() {
 
   useEffect(() => {
     const revealItems = Array.from(document.querySelectorAll("[data-reveal]"));
+    const pageEndRevealItems = revealItems.filter((item) =>
+      item.hasAttribute("data-reveal-page-end"),
+    );
+    const standardRevealItems = revealItems.filter(
+      (item) => !item.hasAttribute("data-reveal-page-end"),
+    );
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (reducedMotion || !("IntersectionObserver" in window)) {
@@ -73,11 +79,29 @@ export function Hero() {
       { threshold: 0.14, rootMargin: "0px 0px -10% 0px" },
     );
 
-    revealItems.forEach((item) => {
+    const pageEndObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-revealed");
+          pageEndObserver.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.01 },
+    );
+
+    standardRevealItems.forEach((item) => {
       if (!item.classList.contains("is-revealed")) observer.observe(item);
     });
 
-    return () => observer.disconnect();
+    pageEndRevealItems.forEach((item) => {
+      if (!item.classList.contains("is-revealed")) pageEndObserver.observe(item);
+    });
+
+    return () => {
+      observer.disconnect();
+      pageEndObserver.disconnect();
+    };
   }, [locale]);
 
   return (
