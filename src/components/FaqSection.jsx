@@ -80,9 +80,7 @@ export function FaqSection({ locale = "ar" }) {
                     type="button"
                     aria-expanded={isOpen}
                     aria-controls={panelId}
-                    onClick={() => {
-                      if (!isOpen) setOpenIndex(index);
-                    }}
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
                   >
                     <img className="faq-chevron" src="/assets/faq/chevron-down.svg" alt="" aria-hidden="true" />
                     <span>{item.question}</span>
