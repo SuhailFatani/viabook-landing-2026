@@ -4,13 +4,12 @@ export function Logo({ locale }) {
   return (
     <a href="#top" className="brand-logo" aria-label={label}>
       <img
-        className="brand-mark"
-        src="/assets/footer/logo-mark.svg"
+        className="brand-logo-image"
+        src="/assets/viabook-logo.svg"
         alt=""
-        width="35"
+        width="123"
         height="26"
       />
-      <span className="brand-wordmark">viabook</span>
     </a>
   );
 }

@@ -85,8 +85,7 @@ export function Footer({ locale = "ar" }) {
           </nav>
 
           <a className="footer-brand" data-reveal href="#top" aria-label={content.homeLabel}>
-            <img src="/assets/footer/logo-mark.svg" alt="" width="35" height="26" />
-            <span>viabook</span>
+            <img src="/assets/viabook-logo.svg" alt="" width="123" height="26" />
           </a>
         </div>
 

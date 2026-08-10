@@ -534,3 +534,49 @@
     transform: translate3d(-50%, 0, 0);
   }
 }
+
+/* Official ViaBook compound logo: exact 123 x 26 outlined SVG. */
+.brand-logo,
+.brand-logo-image {
+  width: 123px;
+  height: 26px;
+}
+
+.brand-logo {
+  display: inline-flex;
+  flex: 0 0 123px;
+  gap: 0;
+}
+
+.brand-logo-image {
+  display: block;
+  object-fit: contain;
+  transition: filter 288ms ease;
+}
+
+.site-header.nav-theme-light .brand-logo-image {
+  filter: none;
+}
+
+.site-header.nav-theme-dark .brand-logo-image,
+.site-header.is-menu-open .brand-logo-image,
+.site-header.is-menu-closing .brand-logo-image {
+  filter: brightness(0) invert(1);
+}
+
+.footer-brand,
+.footer-brand img {
+  width: 123px;
+  height: 26px;
+}
+
+.footer-brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 0;
+}
+
+.footer-brand img {
+  display: block;
+  object-fit: contain;
+}
