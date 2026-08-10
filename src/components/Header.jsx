@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Translate } from "@phosphor-icons/react";
 import { Logo } from "./Logo.jsx";
 
@@ -46,6 +46,7 @@ const NAV_ALWAYS_VISIBLE_RANGE = 80;
 
 export function Header({ locale, onToggleLanguage }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [navTheme, setNavTheme] = useState("dark");
@@ -58,6 +59,16 @@ export function Header({ locale, onToggleLanguage }) {
   const navigation = navigationByLocale[locale];
   const labels = labelsByLocale[locale];
 
+  const openMenu = useCallback(() => {
+    setIsClosing(false);
+    setIsOpen(true);
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    setIsClosing(true);
+    setIsOpen(false);
+  }, []);
+
   useEffect(() => {
     if (!isOpen) return undefined;
 
@@ -66,11 +77,14 @@ export function Header({ locale, onToggleLanguage }) {
     firstMobileLinkRef.current?.focus({ preventScroll: true });
 
     const closeOnEscape = (event) => {
-      if (event.key === "Escape") setIsOpen(false);
+      if (event.key === "Escape") closeMenu();
     };
 
     const closeAboveBreakpoint = () => {
-      if (window.innerWidth > 1100) setIsOpen(false);
+      if (window.innerWidth > 1100) {
+        setIsClosing(false);
+        setIsOpen(false);
+      }
     };
 
     window.addEventListener("keydown", closeOnEscape);
@@ -81,7 +95,7 @@ export function Header({ locale, onToggleLanguage }) {
       window.removeEventListener("keydown", closeOnEscape);
       window.removeEventListener("resize", closeAboveBreakpoint);
     };
-  }, [isOpen]);
+  }, [closeMenu, isOpen]);
 
   useEffect(() => {
     if (isOpen) setIsHidden(false);
@@ -172,6 +186,7 @@ export function Header({ locale, onToggleLanguage }) {
     isScrolled ? "is-scrolled" : "",
     isHidden ? "is-hidden" : "",
     isOpen ? "is-menu-open" : "",
+    isClosing ? "is-menu-closing" : "",
   ].filter(Boolean).join(" ");
 
   const glassClassName = [
@@ -180,6 +195,7 @@ export function Header({ locale, onToggleLanguage }) {
     isScrolled ? "is-scrolled" : "",
     isHidden ? "is-hidden" : "",
     isOpen ? "is-menu-open" : "",
+    isClosing ? "is-menu-closing" : "",
   ].filter(Boolean).join(" ");
 
   return (
@@ -211,12 +227,13 @@ export function Header({ locale, onToggleLanguage }) {
 
       <button
         type="button"
-        className={`menu-button${isOpen ? " is-open" : ""}`}
+        className={`menu-button${isOpen ? " is-open" : ""}${isClosing ? " is-closing" : ""}`}
         aria-label={isOpen ? labels.closeMenu : labels.openMenu}
         aria-expanded={isOpen}
         aria-controls="mobile-navigation"
         onClick={() => {
-          setIsOpen((value) => !value);
+          if (isOpen) closeMenu();
+          else openMenu();
         }}
       >
         <span className="menu-icon" aria-hidden="true">
@@ -227,10 +244,19 @@ export function Header({ locale, onToggleLanguage }) {
 
       <div
         id="mobile-navigation"
-        className={`mobile-menu${isOpen ? " is-open" : ""}`}
+        className={`mobile-menu${isOpen ? " is-open" : ""}${isClosing ? " is-closing" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-hidden={!isOpen}
+        onTransitionEnd={(event) => {
+          if (
+            event.target === event.currentTarget &&
+            event.propertyName === "clip-path" &&
+            !isOpen
+          ) {
+            setIsClosing(false);
+          }
+        }}
       >
         <div className="mobile-menu-inner">
           <nav aria-label={labels.mobileNavigation}>
@@ -240,7 +266,7 @@ export function Header({ locale, onToggleLanguage }) {
                 href={item.href}
                 ref={index === 0 ? firstMobileLinkRef : undefined}
                 tabIndex={isOpen ? 0 : -1}
-                onClick={() => setIsOpen(false)}
+                onClick={closeMenu}
               >
                 {item.label}
               </a>
@@ -252,7 +278,7 @@ export function Header({ locale, onToggleLanguage }) {
               className="mobile-menu-secondary"
               href="#preview"
               tabIndex={isOpen ? 0 : -1}
-              onClick={() => setIsOpen(false)}
+              onClick={closeMenu}
             >
               {labels.loginMobile}
             </a>
@@ -260,7 +286,7 @@ export function Header({ locale, onToggleLanguage }) {
               className="mobile-menu-primary"
               href="#preview"
               tabIndex={isOpen ? 0 : -1}
-              onClick={() => setIsOpen(false)}
+              onClick={closeMenu}
             >
               {labels.startMobile}
             </a>
@@ -270,7 +296,7 @@ export function Header({ locale, onToggleLanguage }) {
               tabIndex={isOpen ? 0 : -1}
               onClick={() => {
                 onToggleLanguage();
-                setIsOpen(false);
+                closeMenu();
               }}
             >
               <Translate size={20} weight="regular" aria-hidden="true" />

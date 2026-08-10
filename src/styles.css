@@ -52,6 +52,27 @@
   transform: rotate(-45deg);
 }
 
+@media (max-width: 1100px) and (prefers-reduced-motion: no-preference) {
+  .menu-icon > span {
+    transition:
+      top 560ms cubic-bezier(0.45, 0, 0.55, 1),
+      transform 560ms cubic-bezier(0.45, 0, 0.55, 1),
+      opacity 440ms ease;
+  }
+
+  .mobile-menu,
+  .mobile-menu.is-open {
+    transition:
+      clip-path 560ms cubic-bezier(0.45, 0, 0.55, 1),
+      opacity 440ms ease,
+      visibility 0s linear 560ms;
+  }
+
+  .mobile-menu.is-open {
+    transition-delay: 0s;
+  }
+}
+
 @media (max-width: 700px) {
   .hero-panel {
     min-height: 100svh;
@@ -422,6 +443,10 @@
   opacity: 0;
 }
 
+.site-header-glass.is-menu-closing {
+  opacity: 0;
+}
+
 .site-header-glass.is-hidden {
   opacity: 0;
   transform: translateY(-100%);
@@ -468,8 +493,14 @@
 }
 
 .site-header.nav-theme-dark .brand-mark,
-.site-header.is-menu-open .brand-mark {
+.site-header.is-menu-open .brand-mark,
+.site-header.is-menu-closing .brand-mark {
   filter: brightness(0) invert(1);
+}
+
+.site-header.is-menu-closing .brand-logo,
+.site-header.is-menu-closing .menu-button {
+  color: #fff;
 }
 
 @media (max-width: 1100px) {
