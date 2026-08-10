@@ -5,7 +5,7 @@ export function Logo({ locale }) {
     <a href="#top" className="brand-logo" aria-label={label}>
       <img
         className="brand-mark"
-        src="/assets/viabook-logo-mark.svg"
+        src="/assets/footer/logo-mark.svg"
         alt=""
         width="35"
         height="26"

@@ -462,3 +462,44 @@
     transition-duration: 0.01ms !important;
   }
 }
+/* Stable compact navigation, exact adaptive logo colors, and centered mobile CTA media. */
+.site-header.nav-theme-light .brand-mark {
+  filter: none;
+}
+
+.site-header.nav-theme-dark .brand-mark,
+.site-header.is-menu-open .brand-mark {
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 1100px) {
+  .site-header.is-hidden,
+  .site-header.is-hidden:not(.is-menu-open) {
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .site-header.is-menu-open {
+    z-index: 200;
+    opacity: 1;
+    visibility: visible;
+    transform: none !important;
+  }
+
+  .site-header.is-menu-open > .header-leading,
+  .site-header.is-menu-open > .menu-button {
+    z-index: 3;
+  }
+
+  .site-header.is-menu-open .mobile-menu {
+    z-index: 2;
+  }
+}
+
+@media (max-width: 1100px) {
+  body .final-cta-reveal .final-cta-dashboard[data-reveal] {
+    right: auto;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+  }
+}

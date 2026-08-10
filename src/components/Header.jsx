@@ -94,6 +94,7 @@ export function Header({ locale, onToggleLanguage }) {
       const scrollDelta = scrollY - lastScrollYRef.current;
       const scrollDirection = scrollDelta > 0 ? "down" : scrollDelta < 0 ? "up" : null;
       const scrolled = scrollY > 24;
+      const canAutoHide = window.innerWidth > 1100;
       const header = headerRef.current;
       const sampleY = scrolled
         ? Math.min(window.innerHeight - 1, 32)
@@ -112,7 +113,11 @@ export function Header({ locale, onToggleLanguage }) {
         currentTheme === nextTheme ? currentTheme : nextTheme,
       );
 
-      if (scrollY <= NAV_ALWAYS_VISIBLE_RANGE) {
+      if (!canAutoHide) {
+        setIsHidden(false);
+        scrollDistanceRef.current = 0;
+        scrollDirectionRef.current = null;
+      } else if (scrollY <= NAV_ALWAYS_VISIBLE_RANGE) {
         setIsHidden(false);
         scrollDistanceRef.current = 0;
       } else if (scrollDirection) {
