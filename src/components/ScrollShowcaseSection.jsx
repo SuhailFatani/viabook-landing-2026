@@ -41,33 +41,58 @@ export function ScrollShowcaseSection({ locale = "ar" }) {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
 
-    const update = () => {
-      frame = 0;
-      if (reducedMotion.matches) {
-        section.style.setProperty("--showcase-scale", "1");
-        section.style.setProperty("--showcase-inverse-scale", "1");
-        setPhase(3);
-        return;
-      }
+// --- 1. دالة update الكاملة ---
+const update = () => {
+  frame = 0;
+  if (reducedMotion.matches) {
+    section.style.setProperty("--showcase-scale", "1");
+    section.style.setProperty("--showcase-inverse-scale", "1");
+    setPhase(3);
+    return;
+  }
 
-      const rect = section.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const progress = clamp((viewportHeight - rect.top) / (rect.height + viewportHeight));
-      const compact = window.innerWidth <= 700;
-      const shortStory = window.innerWidth <= 1000;
-      const entryScale = compact ? 0.74 : 0.52;
-      const focusScale = compact ? 0.94 : 0.72;
-      const focus = easeOut((progress - 0.03) / 0.2);
-      const morph = easeOut((progress - 0.38) / 0.18);
+  const rect = section.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+  const progress = clamp((viewportHeight - rect.top) / (rect.height + viewportHeight));
+  const compact = window.innerWidth <= 700;
+  const shortStory = window.innerWidth <= 1000;
+  const entryScale = compact ? 0.74 : 0.52;
+  const focusScale = compact ? 0.94 : 0.72;
 
-      const showcaseScale = lerp(lerp(entryScale, focusScale, focus), 1, morph);
-      section.style.setProperty("--showcase-scale", showcaseScale.toFixed(4));
-      section.style.setProperty("--showcase-inverse-scale", (1 / showcaseScale).toFixed(4));
-      const phaseThreeStart = compact ? 0.56 : shortStory ? 0.58 : 0.52;
-      const phaseTwoStart = compact ? 0.22 : shortStory ? 0.2 : 0.2;
-      const nextPhase = progress >= phaseThreeStart ? 3 : progress >= phaseTwoStart ? 2 : 1;
-      setPhase((current) => (current === nextPhase ? current : nextPhase));
-    };
+  // حساب حركة التمركز والتكبير
+  const focus = easeOut((progress - 0.05) / 0.18);
+  const morph = easeOut((progress - 0.22) / 0.18);
+
+  const showcaseScale = lerp(lerp(entryScale, focusScale, focus), 1, morph);
+  section.style.setProperty("--showcase-scale", showcaseScale.toFixed(4));
+  section.style.setProperty("--showcase-inverse-scale", (1 / showcaseScale).toFixed(4));
+
+  // حساب نقطة فك التثبيت تلقائياً بناءً على الـ DOM لضمان التوافق مع ارتفاع الـ CSS
+  const unstickProgress = rect.height / (rect.height + viewportHeight);
+  const phaseThreeEnd = unstickProgress - 0.03; // يكتمل الأنميشن 100% قبل الصعود مباشرة
+
+  const phaseThreeStart = compact ? 0.38 : shortStory ? 0.38 : 0.35;
+  const phaseTwoStart = compact ? 0.22 : shortStory ? 0.2 : 0.2;
+  const nextPhase = progress >= phaseThreeStart ? 3 : progress >= phaseTwoStart ? 2 : 1;
+
+  setPhase((current) => (current === nextPhase ? current : nextPhase));
+
+  // حساب تقدم الأنميشن لشريط التعبئة وتمرير القيمة كـ Decimal (0 إلى 1)
+  if (progress >= phaseThreeStart) {
+    const p3Progress = clamp((progress - phaseThreeStart) / (phaseThreeEnd - phaseThreeStart));
+
+    const bookingsProg = clamp(p3Progress / 0.5);
+    const quickProg = clamp((p3Progress - 0.5) / 0.5);
+
+    section.style.setProperty("--progress-bookings", bookingsProg.toFixed(3));
+    section.style.setProperty("--progress-quick", quickProg.toFixed(3));
+
+    setActiveFeature(p3Progress >= 0.5 ? "quick" : "bookings");
+  } else {
+    section.style.setProperty("--progress-bookings", "0");
+    section.style.setProperty("--progress-quick", "0");
+  }
+};
 
     const requestUpdate = () => { if (!frame) frame = window.requestAnimationFrame(update); };
     update();
@@ -89,26 +114,37 @@ export function ScrollShowcaseSection({ locale = "ar" }) {
     }
   }, [phase]);
 
-  useEffect(() => {
-    if (phase !== 3) return undefined;
-    const timer = window.setInterval(() => setActiveFeature((current) => current === "bookings" ? "quick" : "bookings"), 7935);
-    return () => window.clearInterval(timer);
-  }, [phase]);
+  // useEffect(() => {
+  //   if (phase !== 3) return undefined;
+  //   const timer = window.setInterval(() => setActiveFeature((current) => current === "bookings" ? "quick" : "bookings"), 7935);
+  //   return () => window.clearInterval(timer);
+  // }, [phase]);
 
-  const feature = (key, icon, item) => (
-    <button
-      type="button"
-      className={"scroll-showcase-feature scroll-showcase-feature-" + key + (activeFeature === key ? " is-active" : "")}
-      disabled={phase !== 3}
-      onClick={() => setActiveFeature(key)}
-    >
-      <span className="scroll-showcase-feature-track" aria-hidden="true"><span /></span>
-      <span className="scroll-showcase-feature-copy">
-        <strong>{item.title}<img src={icon} alt="" aria-hidden="true" /></strong>
-        <span>{item.description}</span>
-      </span>
-    </button>
-  );
+// --- 2. دالة feature الكاملة ---
+const feature = (key, icon, item) => (
+  <button
+    type="button"
+    className={"scroll-showcase-feature scroll-showcase-feature-" + key + (activeFeature === key ? " is-active" : "")}
+    disabled={phase !== 3}
+    onClick={() => setActiveFeature(key)}
+  >
+    <span className="scroll-showcase-feature-track" aria-hidden="true">
+      <span 
+        style={{
+          width: "100%",
+          transform: `scaleX(${key === "bookings" ? "var(--progress-bookings, 0)" : "var(--progress-quick, 0)"})`,
+          transformOrigin: locale === "ar" ? "right" : "left", // ضبط اتجاه بداية التعبئة حسب اللغة
+          willChange: "transform",
+          transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)"
+        }} 
+      />
+    </span>
+    <span className="scroll-showcase-feature-copy">
+      <strong>{item.title}<img src={icon} alt="" aria-hidden="true" /></strong>
+      <span>{item.description}</span>
+    </span>
+  </button>
+);
 
   return (
     <section ref={sectionRef} className="scroll-showcase-section" data-phase={phase} data-mode={displayMode} aria-labelledby="scroll-showcase-title">
