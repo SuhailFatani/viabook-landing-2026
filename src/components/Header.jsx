@@ -199,6 +199,7 @@ export function Header({ locale, onToggleLanguage }) {
     isClosing ? "is-menu-closing" : "",
   ].filter(Boolean).join(" ");
 
+  
   return (
     <>
       <div className={glassClassName} aria-hidden="true" />
