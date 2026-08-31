@@ -4,14 +4,14 @@ import { Logo } from "./Logo.jsx";
 
 const navigationByLocale = {
   ar: [
-    { label: "الأسعــــار", href: "#preview" },
-    { label: "المميــــزات", href: "#preview" },
-    { label: "المنتــــج", href: "#preview" },
+    { label: "الأسعــــار", href: "/pricing" },
+    { label: "المميــــزات", href: "/#why-viabook-title" },
+    { label: "المنتــــج", href: "/#top" },
   ],
   en: [
-    { label: "Pricing", href: "#preview" },
-    { label: "Features", href: "#preview" },
-    { label: "Product", href: "#preview" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Features", href: "/#why-viabook-title" },
+    { label: "Product", href: "/#top" },
   ],
 };
 

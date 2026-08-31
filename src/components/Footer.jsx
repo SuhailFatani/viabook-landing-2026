@@ -57,7 +57,7 @@ const contentByLocale = {
   },
 };
 
-export function Footer({ locale = "ar" }) {
+export function Footer({ locale = "ar", page = "home" }) {
   const content = contentByLocale[locale];
   const isArabic = locale === "ar";
 
@@ -67,6 +67,7 @@ export function Footer({ locale = "ar" }) {
       id="footer"
       className="site-footer footer-reveal"
       dir={isArabic ? "rtl" : "ltr"}
+      data-nav-theme="light"
     >
       <div className="footer-inner">
         <div className="footer-top">
@@ -75,7 +76,16 @@ export function Footer({ locale = "ar" }) {
               <div className="footer-column" key={column.heading}>
                 <h2>{column.heading}</h2>
                 {column.links.map((link) => (
-                  <a href={link.href} key={link.label}>
+                  <a
+                    href={
+                      page === "pricing" && link.href.startsWith("#")
+                        ? link.href === "#faq-title"
+                          ? "#pricing-faq-title"
+                          : `/${link.href}`
+                        : link.href
+                    }
+                    key={link.label}
+                  >
                     {link.label}
                   </a>
                 ))}
