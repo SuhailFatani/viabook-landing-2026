@@ -107,7 +107,7 @@ button {
   position: relative;
   isolation: isolate;
   height: 1082px;
-  overflow: hidden;
+  overflow: clip;
   display: flex;
   flex-direction: column;
   gap: 90px;
@@ -1228,47 +1228,56 @@ button {
   }
 }
 .scroll-showcase-section {
-  --showcase-scale: 0.52;
-  --showcase-inverse-scale: 1.9231;
+  --showcase-scale: 1;
+  --showcase-inverse-scale: 1;
   position: relative;
-  /* height: 523.71svh; */
   height: 160svh;
   background: #fff;
   color: #18181b;
 }
+
 .scroll-showcase-sticky {
   position: sticky;
   top: 0;
   height: 100svh;
-  min-height: 680px;
+  min-height: 650px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(24px, 3vh, 40px) clamp(20px, 4vw, 64px);
   overflow: hidden;
   background: #fff;
   isolation: isolate;
 }
+
 .scroll-showcase-copy {
-  position: absolute;
+  position: relative;
   z-index: 4;
-  top: clamp(40px, 9vh, 90px);
-  left: 50%;
-  width: min(1170px, calc(100% - 64px));
-  height: 112px;
+  top: auto;
+  left: auto;
+  width: min(1170px, 100%);
+  height: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "description title";
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%);
+  transform: none;
   pointer-events: none;
   will-change: opacity;
 }
+
 .scroll-showcase-section[data-phase="3"] .scroll-showcase-copy {
   opacity: 1;
   visibility: visible;
 }
+
 [dir="ltr"] .scroll-showcase-copy {
   grid-template-areas: "title description";
 }
+
 .scroll-showcase-copy h2 {
   grid-area: title;
   min-width: 0;
@@ -1281,10 +1290,12 @@ button {
   letter-spacing: -0.96px;
   text-align: start;
 }
+
 .scroll-showcase-copy h2 span,
 .scroll-showcase-copy p span {
   display: block;
 }
+
 .scroll-showcase-copy p {
   grid-area: description;
   margin: 0;
@@ -1296,26 +1307,32 @@ button {
   text-align: start;
   white-space: nowrap;
 }
+
 [dir="ltr"] .scroll-showcase-copy h2,
 [dir="ltr"] .scroll-showcase-copy p {
   font-family: Outfit, sans-serif;
   direction: ltr;
 }
+
 .scroll-showcase-card {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  top: clamp(178px, 25vh, 250px);
-  left: 50%;
-  width: min(1170px, calc(100vw - 64px));
-  height: 542px;
+  top: auto;
+  left: auto;
+  width: min(1170px, 100%);
+  flex: 1 1 auto;
+  max-height: none; 
+  min-height: 320px;
+  margin-block: 24px;
   overflow: hidden;
   border: 1px solid #e4e4e7;
   border-radius: 12px;
   background: #161935;
-  transform: translate(-50%) scale(var(--showcase-scale));
+  transform: scale(var(--showcase-scale, 1));
   transform-origin: center;
   will-change: transform;
 }
+
 .scroll-showcase-mobile-reference,
 .scroll-showcase-web-reference {
   position: absolute;
@@ -1355,7 +1372,7 @@ button {
   top: 18.26%;
   left: 50%;
   width: 83.91%;
-  height: 110.7%;
+  height: auto;
   display: flex;
   flex-direction: column;
   gap: 2.33%;
@@ -1426,9 +1443,16 @@ button {
   transform: translate(-50%) scale(var(--showcase-inverse-scale));
   transform-origin: top center;
   pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 343.85ms ease, visibility 0s linear 343.85ms;
 }
 .scroll-showcase-section[data-phase="3"] .scroll-showcase-mode-toggle {
+  opacity: 1;
+  visibility: visible;
   pointer-events: auto;
+  transition-delay: 0s;
 }
 .scroll-showcase-mode-toggle button {
   display: grid;
@@ -1458,25 +1482,27 @@ button {
   height: 20px;
 }
 .scroll-showcase-features {
-  position: absolute;
+  position: relative;
   z-index: 4;
-  top: calc(clamp(178px, 25vh, 250px) + 574px);
-  left: 50%;
-  width: min(1170px, calc(100% - 64px));
+  top: auto;
+  left: auto;
+  width: min(1170px, 100%);
   display: grid;
   grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
   gap: 32px;
   direction: ltr;
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%);
+  transform: none;
   pointer-events: none;
 }
+
 .scroll-showcase-section[data-phase="3"] .scroll-showcase-features {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
+
 .scroll-showcase-feature {
   display: flex;
   min-width: 0;
@@ -1600,61 +1626,42 @@ button {
 }
 @media (max-width: 700px) {
   .scroll-showcase-section {
-    height: 480.0675svh;
+    height: 276svh;
   }
   .scroll-showcase-sticky {
-    min-height: 620px;
+    min-height: 100svh;
+    padding-inline: 16px;
   }
   .scroll-showcase-copy {
-    top: 28px;
-    width: calc(100% - 40px);
+    width: 100%;
     height: auto;
     grid-template-columns: 1fr;
     grid-template-areas: "title" "description";
     gap: 10px;
-  }
-  [dir="ltr"] .scroll-showcase-copy {
-    grid-template-areas: "title" "description";
+    text-align: center;
   }
   .scroll-showcase-copy h2 {
     font-size: clamp(34px, 10vw, 42px);
     line-height: 1.13;
     letter-spacing: -0.7px;
-    text-align: center;
   }
   .scroll-showcase-copy p {
     display: none;
   }
   .scroll-showcase-card {
-    top: clamp(205px, 26vh, 230px);
-    width: calc(100vw - 32px);
-    height: clamp(300px, 43vh, 370px);
-  }
-  .scroll-showcase-mode-toggle {
-    top: 12px;
-  }
-  .scroll-showcase-mode-toggle button {
-    width: 34px;
-    height: 34px;
-    padding: 7px;
+    width: 100%;
+    height: clamp(280px, 40vh, 360px);
   }
   .scroll-showcase-features {
-    top: auto;
-    bottom: 18px;
-    width: calc(100% - 40px);
-    gap: 20px;
+    width: 100%;
+    gap: 16px;
   }
   .scroll-showcase-feature {
-    gap: 12px;
+    gap: 8px;
   }
   .scroll-showcase-feature-copy strong {
     font-size: 15px;
     line-height: 21px;
-    gap: 5px;
-  }
-  .scroll-showcase-feature-copy strong img {
-    width: 22px;
-    height: 22px;
   }
   .scroll-showcase-feature-copy > span {
     display: none;
@@ -1692,7 +1699,7 @@ button {
 }
 .scroll-showcase-copy,
 .scroll-showcase-features {
-  transform: translate(-50%) translateY(14px);
+  transform:  translateY(14px);
   transition:
     opacity 343.85ms ease,
     transform 423.2ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -1700,7 +1707,7 @@ button {
 }
 .scroll-showcase-section[data-phase="3"] .scroll-showcase-copy,
 .scroll-showcase-section[data-phase="3"] .scroll-showcase-features {
-  transform: translate(-50%) translateY(0);
+  transform: translateY(0);
   transition-delay: 0s;
 }
 .scroll-showcase-section[data-mode="mobile"] .scroll-showcase-mode-toggle {
@@ -5136,27 +5143,6 @@ button {
   }
 }
 
-/* Center the complete sticky showcase in the viewport below the glass navigation. */
-@media (min-width: 701px) {
-  .scroll-showcase-sticky {
-    --showcase-centered-copy-top: max(40px, calc(50svh - 373px));
-    --showcase-centered-card-top: calc(
-      var(--showcase-centered-copy-top) + 140px
-    );
-  }
-
-  .scroll-showcase-copy {
-    top: var(--showcase-centered-copy-top);
-  }
-
-  .scroll-showcase-card {
-    top: var(--showcase-centered-card-top);
-  }
-
-  .scroll-showcase-features {
-    top: calc(var(--showcase-centered-card-top) + 574px);
-  }
-}
 @media (min-width: 901px) {
   html[lang="ar"] .scroll-showcase-sticky {
     --showcase-centered-copy-top: max(40px, calc(50svh - 364px));
